@@ -1,5 +1,5 @@
 server:
-    port: ${SERVER_PORT}
+    port: ${SERVER_PORT} 
     ssl:
         enabled: ${SERVER_SSL_ENABLED}
         key-store: ${SERVER_SSL_KEY_STORE}
