@@ -6,3 +6,10 @@ server:
         key-store-password: ${SERVER_SSL_KEY_STORE_PASSWORD}
         key-store-type: ${SERVER_SSL_KEY_STORE_TYPE}
         key-alias: ${SERVER_SSL_KEY_ALIAS}
+
+spring:
+    datasource:
+        url: ${DB_URL}
+        username: ${DB_USER_NAME}
+        password: ${DB_PASSWORD}
+        driver-class-name: com.mysql.cj.jdbc.Driver
