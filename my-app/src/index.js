@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Root from './routes/root';
 
-const routes = createBrowserRouter([
+const router = createBrowserRouter([
     {
         path: "/Capston",
         element: <Root />,
@@ -15,7 +15,7 @@ const routes = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <App />
+    <RouterProvider router={router} />
 );
 
 // If you want to start measuring performance in your app, pass a function
