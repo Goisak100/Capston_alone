@@ -3,11 +3,28 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Root from './routes/root';
+import Search from './routes/search';
+import MyPage from './routes/my-page';
+import SearchResult from './routes/search-result';
 
 const router = createBrowserRouter([
     {
         path: "/Capston",
         element: <Root />,
+        children: [
+            {
+                path: "",
+                element: <Search />,
+            },
+            {
+                path: "My-page",
+                element: <MyPage />,
+            },
+            {
+                path: "Search-result",
+                element: <SearchResult />,
+            },
+        ]
     }
 ])
 
