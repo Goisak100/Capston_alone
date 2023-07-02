@@ -13,7 +13,6 @@ export default function Search() {
     // react에서 코드를 읽을 때는 setBooks가 호출되었을 때 useEffect 코드를 확인해야 한다.
     return (
         <div>
-            <h1>Search 페이지입니다.</h1>
             <input type="text" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
             <button onClick={async () => {
                 setBooks(await fetchBooks(searchText))

@@ -1,7 +1,14 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.1.1'
 	id 'io.spring.dependency-management' version '1.1.0'
+	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 }
 
 group = 'com.example'
@@ -41,10 +48,36 @@ dependencies {
 
 	// query dsl과 hibernate, spring boot jpa가 설치되어야 한다.
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.1.1'
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 
 	implementation 'org.springframework.boot:spring-boot-devtools:3.1.1'
 }
 
+querydsl {
+	jpa = true;
+	querydslSourcesDir = 'src/main/generated/querydsl'
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src/main/java', 'src/main/generated/querydsl']
+		}
+	}
+}
+// querydsl 컴파일시 사용할 옵션 설정
+compileQuerydsl{
+    options.annotationProcessorPath = configurations.querydsl
+}
+// querydsl 이 compileClassPath 를 상속하도록 설정
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    querydsl.extendsFrom compileClasspath
 }

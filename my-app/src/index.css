@@ -1,0 +1,8 @@
+.underline-container h2:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.image-container img:hover {
+    cursor: pointer;
+}
