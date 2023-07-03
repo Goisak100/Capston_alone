@@ -43,3 +43,8 @@ export default function SearchResult() {
 
 
 // 여기에서 지금 spring jpa와 querydsl을 이용하려고 한다.
+
+
+// 지금 여기에서 isbn을 넘긴다. 그러면, isbn을 가지고 book_id를 조회한다.
+
+// 내가 지금 얻어야 하는 값을 creation_images에서 book_id에 해당하는 결과값

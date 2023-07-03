@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,26 +18,43 @@ public class QOrderDetail extends EntityPathBase<OrderDetail> {
 
     private static final long serialVersionUID = 993547680L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QOrderDetail orderDetail = new QOrderDetail("orderDetail");
 
-    public final NumberPath<Long> bookId = createNumber("bookId", Long.class);
+    public final QBook book;
+
+    public final QOrder order;
 
     public final NumberPath<Long> orderId = createNumber("orderId", Long.class);
 
     public final NumberPath<Integer> quantity = createNumber("quantity", Integer.class);
 
+    public final QUser user;
+
     public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
     public QOrderDetail(String variable) {
-        super(OrderDetail.class, forVariable(variable));
+        this(OrderDetail.class, forVariable(variable), INITS);
     }
 
     public QOrderDetail(Path<? extends OrderDetail> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QOrderDetail(PathMetadata metadata) {
-        super(OrderDetail.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QOrderDetail(PathMetadata metadata, PathInits inits) {
+        this(OrderDetail.class, metadata, inits);
+    }
+
+    public QOrderDetail(Class<? extends OrderDetail> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.book = inits.isInitialized("book") ? new QBook(forProperty("book")) : null;
+        this.order = inits.isInitialized("order") ? new QOrder(forProperty("order"), inits.get("order")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }
