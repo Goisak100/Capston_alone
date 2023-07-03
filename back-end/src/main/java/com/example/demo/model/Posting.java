@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "creation_images")
-public class CreationImage {
+@Table(name = "postings")
+public class Posting {
     @Id
     private long id;
 
@@ -25,4 +25,6 @@ public class CreationImage {
 
     @Column(name = "image_url")
     private String imageUrl;
+
+    private String content;
 }

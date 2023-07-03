@@ -10,16 +10,18 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QCreationImage is a Querydsl query type for CreationImage
+ * QPosting is a Querydsl query type for Posting
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QCreationImage extends EntityPathBase<CreationImage> {
+public class QPosting extends EntityPathBase<Posting> {
 
-    private static final long serialVersionUID = 362358237L;
+    private static final long serialVersionUID = 1846087715L;
 
-    public static final QCreationImage creationImage = new QCreationImage("creationImage");
+    public static final QPosting posting = new QPosting("posting");
 
     public final NumberPath<Long> bookId = createNumber("bookId", Long.class);
+
+    public final StringPath content = createString("content");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -27,16 +29,16 @@ public class QCreationImage extends EntityPathBase<CreationImage> {
 
     public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
-    public QCreationImage(String variable) {
-        super(CreationImage.class, forVariable(variable));
+    public QPosting(String variable) {
+        super(Posting.class, forVariable(variable));
     }
 
-    public QCreationImage(Path<? extends CreationImage> path) {
+    public QPosting(Path<? extends Posting> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QCreationImage(PathMetadata metadata) {
-        super(CreationImage.class, metadata);
+    public QPosting(PathMetadata metadata) {
+        super(Posting.class, metadata);
     }
 
 }
