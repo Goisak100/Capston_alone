@@ -10,25 +10,6 @@ export default function Search() {
     const navigate = useNavigate();
     useEffect(() => moveToSearchResult(books, navigate), [books]);
 
-    useEffect(() => {
-
-        const fetch = async() => {
-            try {
-                const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/test`, {
-                 params: {
-                     address: '5',
-                 }
-                })
-             } catch(error) {
-                 console.log(error);
-             }
-        }
-
-        fetch();
-        
-    }, [])
-
-    // react에서 코드를 읽을 때는 setBooks가 호출되었을 때 useEffect 코드를 확인해야 한다.
     return (
         <div>
             <input type="text" value={searchText} onChange={(e) => setSearchText(e.target.value)} />

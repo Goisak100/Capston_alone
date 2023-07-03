@@ -6,6 +6,7 @@ import Root from './routes/root';
 import Search from './routes/search';
 import MyPage from './routes/my-page';
 import SearchResult from './routes/search-result';
+import DetailPage from './routes/detail-page';
 
 const router = createBrowserRouter([
     {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
             {
                 path: "Search-result",
                 element: <SearchResult />,
+            },
+            {
+                path: "Detail-page",
+                element: <DetailPage />,
             },
         ]
     }

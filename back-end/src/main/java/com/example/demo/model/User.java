@@ -34,4 +34,7 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private UserDetail userDetail;
+
+    @OneToMany(mappedBy = "user")
+    private List<Posting> postings;
 }
