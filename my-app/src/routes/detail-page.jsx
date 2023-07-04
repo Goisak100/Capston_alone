@@ -9,9 +9,11 @@ export default function DetailPage() {
     const isbn = location?.state?.isbn;
 
     const [postings, setPostings] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (isbn === undefined) return;
+        setIsLoading(true);
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/getPostingsByBook`, {
@@ -22,12 +24,20 @@ export default function DetailPage() {
                 setPostings(response.data);
             } catch (error) {
                 console.log(error);
+            } finally {
+                setIsLoading(false);
             }
         }
 
         fetchData();
 
     }, [isbn]);
+
+    if (isLoading) {
+        return (
+            <div>로딩 중입니다...</div>
+        )
+    }
 
     return (
         <div>
