@@ -25,4 +25,10 @@ public class BookController {
         List<PostingByBookDto> postings = bookService.getPostingsByBook(isbn);
         return ResponseEntity.ok().body(postings);
     }
+
+    @GetMapping("/getPostingsByUser")
+    public ResponseEntity<List<PostingByBookDto>> getPostingsByUser(@Param("email") String email) {
+        List<PostingByBookDto> postings = bookService.getPostingsByUser(email);
+        return ResponseEntity.ok().body(postings);
+    }
 }
