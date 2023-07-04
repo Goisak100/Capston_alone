@@ -36,4 +36,6 @@ public class Posting {
     private String content;
 
     private String prompt;
+
+    private int like;
 }

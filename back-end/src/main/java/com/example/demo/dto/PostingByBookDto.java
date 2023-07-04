@@ -12,4 +12,5 @@ public class PostingByBookDto {
     private String imageUrl;
     private String content;
     private String email; 
+    private int like;
 }

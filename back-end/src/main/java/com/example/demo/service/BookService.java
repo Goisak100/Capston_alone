@@ -34,7 +34,8 @@ public class BookService {
                 book.getTitle(),
                 posting.getImageUrl(),
                 posting.getContent(),
-                user.getEmail()
+                user.getEmail(),
+                posting.getLike()
             );
             postingsByBookDto.add(postingByBookDto);
         }
