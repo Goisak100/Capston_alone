@@ -6,3 +6,86 @@
 .image-container img:hover {
     cursor: pointer;
 }
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal > .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal > .content {
+  width: 600px;
+  height: 753px;
+  z-index: 10000;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.modal > .content .main {
+  padding: 20px;
+}
+
+.modal > .content .main .textarea {
+  width: 100%;
+  font-size: 18px;
+  resize: none;
+}
+
+.modal > .content .main .buttons {
+  display: flex;
+  padding: 10px 0 0 0;
+  justify-content: right;
+}
+
+.modal > .content .main .buttons button {
+  margin-left: 10px;
+  font-size: 18px;
+}
+
+.modal > .content .image{
+  width: 600px;
+  height: 600px;
+  object-fit: contain;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-container {
+  display: flex;
+  width: 600px;
+  height: 600px;
+  justify-content: center;
+  align-items: center;
+}
