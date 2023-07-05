@@ -159,7 +159,7 @@ export default function ImageUpload({ onClose }) {
                             </div>
                         </div>
                     }
-                    
+
                     {currentPage === 2 &&
                         <div>
                             {isLoading &&
