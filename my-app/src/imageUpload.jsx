@@ -1,5 +1,7 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import LoadingSpinner from "./components/loadingSpinner";
+
 
 export default function ImageUpload({ onClose }) {
 
@@ -89,24 +91,36 @@ export default function ImageUpload({ onClose }) {
         };
     };
 
-    // currentPage가 1이냐, 2냐, 3이냐에 따라서 다르게 렌더링하도록 switch case 작성
+    const [books, setBooks] = useState([]);
+    useEffect(() => {
+        if (currentPage !== 1 || books.length !== 0) return;
 
-    // 각 페이지를 구별할 수 있는 플래그가 있어야 하나?
-    // 현재 페이지를 나타내는 1, 2, 3을 기록한다.
-    // 뒤로와 다음을 누를 때마다 어떤 진행 상황인지 파악해야 한다.
-    // 1페이지
-    // 2페이지
-    // 3페이지
+        // 데이터베이스에서 사용자가 구매한 책 정보를 가져와야 한다.
+        const fetchUserBoughtBooks = async () => {
+            setIsLoading(true);
+            const formData = new FormData();
+            // # TEMP
+            // 해당 값은 사용자 별 이메일로 교체되어야 한다.
+            formData.append("email", "goisak100@naver.com");
+            try {
+                const response = await axios.post(`${process.env.REACT_APP_SERVER_HOST}/api/getUserBoughtBooks`, formData);
+                setBooks(response.data);
+            } catch (error) {
+                console.log(error);
+                return;
+            } finally {
+                setIsLoading(false);
+            }
+        }
 
-    // 1페이지에서는 뒤로를 누르면, 종료된다. (메시지를 띄워야 함)
-    // 1페이지에서는 다음을 누르면, 책을 선택해야 한다. (선택하지 않으면, 경고)
+        // 이미지와 책 이름, 저자 정보를 받아서 처리한다.
+        // 일단 이미지를 위아래 나열할 수 있는 상태로 놓는다.
+        // 마우스를 오버하면, 어떤 책인지 정보를 간단하게 확인할 수 있게끔 한다.
+        // 선택하면, 해당 책을 선택했는지 표시를 한다.
+        // 선택한 값을 조건 검사해서 다음 페이지로 넘길 지 말지를 결정한다.
 
-    // 2페이지에서는 뒤로를 누르면, 1페이지로 넘어간다.
-    // 2페이지에서는 다음을 누르면, 이미지를 생성하고 선택해야 한다.
-
-    // 3페이지에서는 해당 이미지와 함께 콘텐트를 입력하고, 업로드를 할 수 있어야 한다.
-    // 이때 뒤로가기를 누르면, 2페이지로 이동한다.
-    // 3페이지에서는 다음 버튼이 '업로드' 버튼으로 바뀐다.
+        fetchUserBoughtBooks();
+    }, [currentPage])
 
     return (
         <div>
@@ -121,15 +135,36 @@ export default function ImageUpload({ onClose }) {
 
                     {currentPage === 1 &&
                         <div>
-
+                            {isLoading &&
+                                <div className="loading-container">
+                                    <LoadingSpinner />
+                                </div>}
+                            <div>
+                                {!isLoading && books.length === 0
+                                    ? <div>구매한 책 목록을 불러올 수 없습니다.</div>
+                                    :
+                                    <div className="books-container">
+                                        {books.map((book, index) => {
+                                            return (
+                                                // 해당 부분은 4개, 스크롤 형식으로 바꾸어야 함
+                                                <div key={index}>
+                                                    <h3>제목: {book.title}</h3>
+                                                    <h4>저자: {book.author}</h4>
+                                                    <img src={book.thumbnail} alt={`${book.title}의 이미지입니다.`}/>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                }
+                            </div>
                         </div>
                     }
-
+                    
                     {currentPage === 2 &&
                         <div>
                             {isLoading &&
                                 <div className="loading-container">
-                                    <div className="loading-spinner"></div>
+                                    <LoadingSpinner />
                                 </div>}
                             <div>
                                 {imageUrls.length !== 0 &&
@@ -170,15 +205,8 @@ export default function ImageUpload({ onClose }) {
 
                         </div>
                     }
-
-
                 </div>
             </div>
         </div >
     )
 }
-
-// 리액트의 특징을 잘 이해하고, 이를 활용하는 게 중요한 듯
-
-// 이미지를 선택하고, 제출하는 기능이 있어야 한다.
-// 선택할 때마다 로그에 링크를 띄우는 방식으로 디버깅하자.
