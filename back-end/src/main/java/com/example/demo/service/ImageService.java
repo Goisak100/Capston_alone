@@ -22,23 +22,24 @@ public class ImageService {
         this.API_KEY = apiKey;
     }
 
-    public String getImageUrl(String prompt) {
-    
+    public String[] getImageUrl(String prompt) {
+
         JSONObject requestBody = new JSONObject();
         requestBody.put("model", "image-alpha-001");
         requestBody.put("prompt", prompt);
-        requestBody.put("num_images", 1);
+        requestBody.put("num_images", 4);
         requestBody.put("size", "1024x1024");
         requestBody.put("response_format", "url");
 
         OkHttpClient client = new OkHttpClient();
 
-        RequestBody body = RequestBody.create(requestBody.toString(), MediaType.parse("application/json; charset=utf-8"));
+        RequestBody body = RequestBody.create(requestBody.toString(),
+                MediaType.parse("application/json; charset=utf-8"));
         Request request = new Request.Builder()
-            .url(API_URL)
-            .post(body)
-            .addHeader("Authorization", "Bearer " + API_KEY)
-            .build();
+                .url(API_URL)
+                .post(body)
+                .addHeader("Authorization", "Bearer " + API_KEY)
+                .build();
 
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) {
@@ -46,8 +47,14 @@ public class ImageService {
             }
 
             JSONObject jsonObject = new JSONObject(response.body().string());
-            System.out.println(jsonObject.getJSONArray("data").getJSONObject(0).getString("url"));
-            return jsonObject.getJSONArray("data").getJSONObject(0).getString("url");
+
+            String[] urls = new String[4];
+            urls[0] = jsonObject.getJSONArray("data").getJSONObject(0).getString("url");
+            urls[1] = jsonObject.getJSONArray("data").getJSONObject(1).getString("url");
+            urls[2] = jsonObject.getJSONArray("data").getJSONObject(2).getString("url");
+            urls[3] = jsonObject.getJSONArray("data").getJSONObject(3).getString("url");
+
+            return urls;
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;

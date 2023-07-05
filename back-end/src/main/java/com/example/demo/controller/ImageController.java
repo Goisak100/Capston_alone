@@ -17,7 +17,7 @@ public class ImageController {
     }
 
     @GetMapping("/getImageUrl")
-    public String getImageUrl(@Param("prompt") String prompt) {
+    public String[] getImageUrl(@Param("prompt") String prompt) {
         return imageService.getImageUrl(prompt); // imageService.createImage(prompt).getImageUrl()로 설정하면 더 베스트
     }
 }

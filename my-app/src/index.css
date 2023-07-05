@@ -30,10 +30,18 @@
 
 .modal > .content {
   width: 600px;
-  height: 753px;
+  height: 810px;
   z-index: 10000;
+  border-radius: 10px;
   background-color: white;
   box-sizing: border-box;
+}
+
+.modal > .content .navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px 0 20px;
 }
 
 .modal > .content .main {
@@ -53,14 +61,33 @@
 }
 
 .modal > .content .main .buttons button {
-  margin-left: 10px;
   font-size: 18px;
 }
 
 .modal > .content .image{
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+}
+
+.modal > .content .image-wrap {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  box-sizing: border-box;
+}
+
+.modal > .content .image-select{
+ border: 4px solid #343434;
+}
+
+.modal > .content .images-container {
   width: 600px;
   height: 600px;
-  object-fit: contain;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: space-around;
 }
 
 .loading-spinner {
@@ -88,4 +115,8 @@
   height: 600px;
   justify-content: center;
   align-items: center;
+}
+
+.hover-cursor-pointer:hover {
+  cursor: pointer;
 }
