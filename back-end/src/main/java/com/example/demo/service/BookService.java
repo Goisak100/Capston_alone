@@ -73,7 +73,8 @@ public class BookService {
                 BookBoughtByUserDto bookBoughtByUserDto = new BookBoughtByUserDto(
                         book.getThumbnail(),
                         book.getTitle(),
-                        book.getAuthor());
+                        book.getAuthor(),
+                        book.getIsbn());
 
                 booksBoughtByUserDto.add(bookBoughtByUserDto);
             }

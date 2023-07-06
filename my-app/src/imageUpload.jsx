@@ -28,10 +28,26 @@ export default function ImageUpload({ onClose }) {
         }
     }
 
-    const [selectedImage, setSelectedImage] = useState(null);
-    const handleSelectedImage = (index) => {
-        setSelectedImage(index);
+    const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+    const [selectedImageUrl, setSelectedImageUrl] = useState("");
+    const handleSelectedImage = (e, index) => {
+        console.log(index);
+        setSelectedImageIndex(index);
+        setSelectedImageUrl(e.target.src);
     }
+
+    const [selectedBookIndex, setSelectedBookIndex] = useState(null);
+    const [selectedBook, setSelectedBook] = useState({});
+    const handleSelectedBook = (index) => {
+        setSelectedBookIndex(index);
+        setSelectedBook(books[index]);
+    }
+
+    // TEST
+    // useEffect(() => {
+    //     console.log(selectedBook);
+    // }, [selectedBook]);
+
 
     const [prevText, setPrevText] = useState("닫기");
     const [nextText, setNextText] = useState("다음");
@@ -70,6 +86,10 @@ export default function ImageUpload({ onClose }) {
             case 1:
                 // 2페이지로 넘어감
                 // 조건 체크, 책을 선택했는가?
+                if (Object.keys(selectedBook).length === 0) {
+                    alert("책을 선택해 주세요.");
+                    return;
+                }
                 setPageTitle("이미지 생성");
                 setPrevText("뒤로");
                 setCurrentPage(2);
@@ -78,6 +98,10 @@ export default function ImageUpload({ onClose }) {
                 // 3페이지로 넘어감
                 // 다음 문구를 업로드로 변경해야 함
                 // 조건 체크, 이미지를 선택했는가?
+                if (selectedImageUrl === "") {
+                    alert("이미지를 선택해 주세요.");
+                    return;
+                }
                 setPageTitle("새 게시물 만들기")
                 setNextText("업로드");
                 setCurrentPage(3);
@@ -146,11 +170,11 @@ export default function ImageUpload({ onClose }) {
                                     <div className="books-container">
                                         {books.map((book, index) => {
                                             return (
-                                                // 해당 부분은 4개, 스크롤 형식으로 바꾸어야 함
-                                                <div key={index}>
-                                                    <h3>제목: {book.title}</h3>
-                                                    <h4>저자: {book.author}</h4>
-                                                    <img src={book.thumbnail} alt={`${book.title}의 이미지입니다.`}/>
+                                                <div className="book-container" key={index}>
+                                                    <div className={selectedBookIndex === index ? 'book-select' : ''} />
+                                                    <img className="book" 
+                                                    onClick={() =>handleSelectedBook(index)}
+                                                    src={book.thumbnail} alt={`${book.title}의 이미지입니다.`} />
                                                 </div>
                                             );
                                         })}
@@ -167,23 +191,23 @@ export default function ImageUpload({ onClose }) {
                                     <LoadingSpinner />
                                 </div>}
                             <div>
-                                {imageUrls.length !== 0 &&
+                                {/* {imageUrls.length !== 0 &&
                                     <div className="images-container">
                                         {imageUrls.map((url, index) => {
                                             return (
-                                                <div>
-                                                    <div key={index}
-                                                        className={selectedImage === index ? 'image-select image-wrap' : 'image-wrap'}
-                                                        onClick={() => handleSelectedImage(index)}>
-                                                    </div>
-                                                    <img
-                                                        className="image"
-                                                        src={url}
-                                                        alt={`AI로 생성된 ${index + 1}번째 이미지입니다`} />
-                                                </div>
+                                                // <div>
+                                                //     <div key={index}
+                                                //         className={selectedImageIndex === index ? 'image-select image-wrap' : 'image-wrap'}
+                                                //         onClick={(e) => handleSelectedImage(e, index)}>
+                                                //     </div>
+                                                //     <img
+                                                //         className="image"
+                                                //         src={url}
+                                                //         alt={`AI로 생성된 ${index + 1}번째 이미지입니다`} />
+                                                // </div>
                                             )
                                         })}
-                                    </div>}
+                                    </div>} */}
                                 <div className="main">
                                     <textarea className="textarea"
                                         placeholder="여기에 생성될 이미지와 관련한 프롬프트를 작성하세요."
@@ -193,7 +217,7 @@ export default function ImageUpload({ onClose }) {
                                     <div className="buttons">
                                         <button onClick={fetchData}>생성</button>
                                         {/**테스트 용도 임시 버튼 */}
-                                        <button onClick={() => setSelectedImage("testLink")}>테스트 용도 임시 버튼</button>
+                                        <button onClick={() => setSelectedImageIndex("testLink")}>테스트 용도 임시 버튼</button>
                                     </div>
                                 </div>
                             </div>
@@ -210,3 +234,46 @@ export default function ImageUpload({ onClose }) {
         </div >
     )
 }
+
+
+// 이미지 업로드하기에서 책을 선택했을 때 해당 책에서 isbn을 추출해야 한다.
+// 그 다음에는 책을 선택되게 만들어야 한다.
+// 책을 선택하기 전에는 제출되지 않게 해야 한다.
+// 선택한 책은 selectedBook에 선택되어야 한다. {} 초기값
+
+// 해당 객체가 값이 없으면, 검사가 막히게 해야 한다.
+
+
+
+// 해당 책을 선택하고, 다음으로 넘어갔을 때 선택한 책이 보여야 한다.
+// 해당 책을 기반으로, 이미지 생성
+// 이때도 다음으로 넘어가려면, 특정 검사를 조건해야 한다.
+
+
+// 3페이지에서 콘텐츠를 입력한다.
+// 콘텐츠를 입력하고, 업로드를 누르면, 업로드가 되어야 한다.
+// 해당 부분은 switch 문에서 적절하게 업로드하는 axios를 호출한다.
+// formData로 만들어서 post하면 될 듯, 그리고, 해당 부분을 서버에서 받아서 처리해야 한다.
+
+// 이미지를 url로 받고, 해당 url을 적절하게 수정해서 리소스로 만들고, 해당 리소스를 저장한다.
+// 저장할 때 local과 서버에서 다르게 처리하면, 좋긴 하다.
+// 이미지를 저장한 다음에, DB에도 저장한다. 해당 과정은 Transaction으로 처리한다.
+// 여기에서 트랜잭션이 실패하면, 이미지를 삭제하게끔 해야 한다.
+// 또한 이미지를 저장할 때 고유한 이름을 생성할 수 있도록 해야 한다.
+
+
+// DB처리까지 끝내면, 이미지 업로드 완료라는 화면을 띄운다. (이거 4페이지를 만들어서, 처리해야 겠네.)
+// 4페이지에서는 그냥 나가지면 되고, 1~3페이지까지는 나가기 전 경고를 확인하면 된다.
+
+// 이 상태가 되면, 업로드한 이미지를 마이 페이지에서 확인도 할 수 있어야 하고,
+// 검색했을 때도 확인할 수 있어야 한다.
+
+// 그리고, 전체적인 UI를 간단하게 꾸민다. 언제까지? 내일까지.
+
+
+// 위에서부터 하나씩 처리하고, 차분한 마음을 갖고 하도록 하자.
+// 끈기를 가지고, 하나씩 해결하는 능력을 키우는 거다.
+// 문제해결능력을 기르기 위해서 혼자 힘으로 하도록 노력한다.
+// 안 되는 거 같으면, 왜 안 되는지, 내가 모르는 것인지, 아니면 아는 데 하기 귀찮은 것인지르 파악하자.
+
+// 경험이 누적되면, 다음 번에 어떤 행동을 할 때 실수하는 것을 줄일 수가 있다. 지금 경험을 누적하도록 하자.

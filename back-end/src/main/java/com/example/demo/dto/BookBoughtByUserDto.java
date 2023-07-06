@@ -11,4 +11,5 @@ public class BookBoughtByUserDto {
     private String thumbnail;
     private String title;
     private String author;
+    private String isbn;
 }

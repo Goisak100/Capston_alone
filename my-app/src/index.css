@@ -3,9 +3,9 @@
   cursor: pointer;
 }
 
-.image-container img:hover {
+/* .image-container img:hover {
     cursor: pointer;
-}
+} */
 
 .modal {
   position: fixed;
@@ -64,32 +64,6 @@
   font-size: 18px;
 }
 
-.modal > .content .image{
-  width: 300px;
-  height: 300px;
-  object-fit: contain;
-}
-
-.modal > .content .image-wrap {
-  position: fixed;
-  width: 300px;
-  height: 300px;
-  box-sizing: border-box;
-}
-
-.modal > .content .image-select{
- border: 4px solid #343434;
-}
-
-.modal > .content .images-container {
-  width: 600px;
-  height: 600px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-content: space-around;
-}
-
 .loading-container {
   width: 600px;
   height: 600px;
@@ -98,3 +72,38 @@
 .hover-cursor-pointer:hover {
   cursor: pointer;
 }
+
+.modal > .content .books-container {
+  width: 600px;
+  height: 600px;
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.modal > .content .books-container .book-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+.modal > .content .books-container .book-select {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 4px solid #000000;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.modal > .content .books-container .book {
+  width: 100%;
+  height: 100%;
+}
+
+/*
+    이미지 하나일 때는 정상적을 작동하지만, position이 fixed이기 때문에, 중첩되어서 이미지가 나타난다.
+    즉, books-container에서 display를 flex로 지정해서 1, 2, 3, 4로 나열했지만, 여기에서 되지 않는 것이다.
+    
+
+    앞으로 게시글을 작성할 때는 실제로 적용한 다음에 글을 작성하는 걸로 하자.
+*/
