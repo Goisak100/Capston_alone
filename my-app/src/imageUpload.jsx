@@ -109,15 +109,15 @@ export default function ImageUpload({ onClose }) {
                 }
                 const uploadPosting = async () => {
                     setIsLoading(true);
-                    const formData = new FormData();
-                    formData.append("isbn", selectedBook.isbn);
-                    formData.append("imageUrl", selectedImageUrl);
-                    formData.append("content", content);
-                    formData.append("prompt", prompt);
-                    // 임시 값, 나중에 대체되어야 함
-                    formData.append("email", "goisak100@naver.com");
+
                     try {
-                        await axios.post(`${process.env.REACT_APP_SERVER_HOST}/api/uploadPosting`, formData);
+                        await axios.post(`${process.env.REACT_APP_SERVER_HOST}/api/uploadPosting`, {
+                            email: "goisak100@naver.com",
+                            isbn: selectedBook.isbn,
+                            imageUrl: selectedImageUrl,
+                            prompt: prompt,
+                            content: content,
+                        });
                     } catch (error) {
                         console.log(error);
                     } finally {

@@ -37,5 +37,6 @@ public class Posting {
 
     private String prompt;
 
+    @Column(name = "`like`")
     private int like;
 }
