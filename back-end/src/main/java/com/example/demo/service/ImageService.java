@@ -1,5 +1,11 @@
 package com.example.demo.service;
 
+import java.io.File;
+import java.net.URL;
+import java.nio.file.Paths;
+import java.util.UUID;
+
+import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -17,9 +23,13 @@ public class ImageService {
 
     private final String API_URL = "https://api.openai.com/v1/images/generations";
     private final String API_KEY;
+    private final String SAVE_FILE_PATH;
 
-    public ImageService(@Value("${openai.apiKey}") String apiKey) {
+    public ImageService(
+            @Value("${openai.apiKey}") String apiKey,
+            @Value("${image.saveFilePath}") String saveFilePath) {
         this.API_KEY = apiKey;
+        this.SAVE_FILE_PATH = saveFilePath;
     }
 
     public String[] getImageUrl(String prompt) {
@@ -60,4 +70,24 @@ public class ImageService {
             return null;
         }
     }
+
+    // 1. 이미지 url에 접근해서 png 파일로 저장해야 한다.
+    public void createImage(String imageUrl, String filename) {
+        try {
+            URL url = new URL(imageUrl);
+
+            // 3. 로컬과 서버 경로를 다르게 저장해야 한다.
+            File file = new File(Paths.get(SAVE_FILE_PATH, filename).toString());
+
+            FileUtils.copyURLToFile(url, file);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public String createUUID() {
+        return UUID.randomUUID().toString();
+    }
+
+    // 4. 클라이언트에서 해당 링크를 호출했을 때 접근할 수 있게 해야 한다.
 }

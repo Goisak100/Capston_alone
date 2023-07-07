@@ -20,6 +20,14 @@ spring:
         properties:
             hibernate:
                 format_sql: true
+    mvc:
+        static-path-pattern: /resources/**
+    web:
+        resources:
+            static-locations: file:${IMAGE_SAVE_FILE_PATH}
 
 openai:
     apiKey: ${OPENAI_API_KEY}
+
+image:
+    saveFilePath: ${IMAGE_SAVE_FILE_PATH}

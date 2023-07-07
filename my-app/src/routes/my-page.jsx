@@ -47,10 +47,12 @@ export default function MyPage() {
             {postings.length === 0
                 ? <div>올린 게시글이 없습니다</div>
                 : postings.map((posting, index) => {
+                    console.log(`${process.env.REACT_APP_SERVER_HOST}/resources/${posting.imageUrl}`)
                     return (
                         <div key={index}>
                             <h3>제목: {posting.title}</h3>
-                            <p>이미지: {posting.imageUrl}</p>
+                            
+                            <img src={`${process.env.REACT_APP_SERVER_HOST}/resources/${posting.imageUrl}`} alt="AI로 생성된 이미지입니다."/>
                             <p>내용: {posting.content}</p>
                             <p>작성자: {posting.email}</p>
                             <p>좋아요: {posting.like}</p>
